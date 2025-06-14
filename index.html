@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wedding Potluck Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-8">
+<!-- Overlay Structure -->
+<div id="thank-you-overlay">
+    <div id="thank-you-content">
+        <img id="explosion-gif" src="images/explosion(noloop).gif" alt="Explosion">
+        <img id="hot-food-gif" src="images/hot-food.gif" alt="Hot Food">
+    </div>
+</div>
+<!-- Form Container with relative positioning -->
+<div class="relative w-full max-w-md">
+
+    <!-- Splash Screen (positioned over the form only) -->
+    <div id="splash-screen" class="absolute inset-0 bg-white z-50 flex flex-col items-center justify-top text-center p-8 transition-opacity duration-500 rounded-xl shadow-xl">
+        <img src="images/cook-kirby-loading.gif" alt="Loading" class="w-58 h-48 mb-6" />
+        <p class="text-lg font-medium text-gray-700 mb-6">
+            Welcome to the potluck!
+            If you would like to help by bringing food, we would greatly appreciate that.
+        </p>
+        <p class="text-lg font-medium text-gray-700 mb-6">
+            Try to avoid duplicate food (you'll see a list),
+            but dietary alternatives are always welcomed.
+        </p>
+        <button id="splash-ok-btn" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+            Okay, got it!
+        </button>
+    </div>
+
+    <!-- Main Form -->
+    <div id="form-wrapper" class="bg-white shadow-xl rounded-xl w-full p-6 sm:p-8">
+        <h1 class="text-2xl font-semibold text-center mb-2">Nathan and Hannah Present:::::::::::::</h1>
+
+        <div class="flex justify-center mb-2">
+            <img src="images/crockpot.png" alt="funny ness" class="w-32 h-20 object-fill" />
+        </div>
+
+        <h3 class="text-2xl font-semibold text-center mb-6">The Great Wedding Potluck Signup</h3>
+
+        <form id="dish-form" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="person">Your Name</label>
+                <input type="text" id="person" name="person" required placeholder="Spongebob Squarepants" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-500" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Your Email</label>
+                <input type="email" id="email" name="email" required placeholder="patrick.star@gmail.com" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-500" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Pick a Category!</label>
+                <div id="category-buttons" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+                <input type="hidden" name="category" id="category-hidden" required />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Other People are Bringing:</label>
+                <ul id="taken-dishes" class="list-disc list-inside text-sm text-gray-600 pl-2 space-y-1">
+                    <!-- Items will be inserted here -->
+                </ul>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="dish">Your Dish</label>
+                <input type="text" id="dish" name="dish" required placeholder="eg. Crabby Patty" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-500" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="servings">Servings</label>
+                <input type="number" id="servings" name="servings" min="1" required placeholder="eg. 20" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-500" />
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="gf" id="gf"
+                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600 focus:ring-2 focus:ring-gray-500" />
+                <label for="gf" class="text-sm text-gray-700">Gluten Free</label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="df" id="df"
+                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600" />
+                <label for="df" class="text-sm text-gray-700">Dairy Free</label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="vegan" id="vegan"
+                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600 focus:ring-2 focus:ring-gray-500" />
+                <label for="vegan" class="text-sm text-gray-700">Vegan</label>
+            </div>
+            <button type="submit" class="w-full mt-4 bg-gray-600 text-white text-sm font-medium px-4 py-3 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                Submit Dish
+            </button>
+
+            <div id="status" class="text-center mt-4 text-sm text-red-700 px-4 py-2 rounded mb-4"></div>
+        </form>
+    </div>
+</div>
+
+<script src="formHandler.js"></script>
+</body>
+</html>
