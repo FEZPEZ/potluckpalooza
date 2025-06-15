@@ -80,7 +80,7 @@ async function loadCategoryData() {
 
             const btn = document.createElement('button');
             btn.type = 'button';
-            btn.className = `category-button w-full flex justify-between items-center px-4 py-2 rounded border ${bg} hover:bg-opacity-80`;
+            btn.className = `category-button w-full flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-4 py-2 rounded border text-left ${bg} hover:bg-opacity-80`;
             btn.innerHTML = `
                 <span class="font-medium">${cat.name}</span>
                 <span class="text-sm ${color}">${text}</span>
