@@ -98,8 +98,8 @@ async function loadCategoryData() {
                 const servingsInput = document.getElementById('servings');
 
                 if (cat.name.toLowerCase() === 'the cupcakes') {
-                    servingsInput.value = 36;
-                    dishInput.placeholder = "You'll need to make 3 dozen!";
+                    servingsInput.value = 24;
+                    dishInput.placeholder = "You'll need to make 2 dozen!";
                 } else {
                     servingsInput.value = '';
                     dishInput.placeholder = `Your favorite ${cat.name.toLowerCase()}`;
