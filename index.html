@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Potluck Palooza</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&family=Oswald:wght@700&display=swap" rel="stylesheet">
 </head>
 <body class="min-h-screen flex items-center justify-center px-4 py-8">
 <!-- Overlay Structure -->
 <div id="thank-you-overlay">
-    <div id="thank-you-content">
-        <img id="explosion-gif" src="images/explosion(noloop).gif" alt="Explosion">
-        <img id="hot-food-gif" src="images/hot-food.gif" alt="Hot Food">
+    <div id="thank-you-content" class="text-center">
+        <p class="text-2xl font-bold text-white mb-4">Success!</p>
+        <img id="explosion-gif" src="images/explosion(noloop).gif" alt="Explosion" class="mx-auto">
+        <img id="hot-food-gif" src="images/hot-food.gif" alt="Hot Food" class="mx-auto mb-1">
+        <p class="text-1xl font-bold text-white mt-1">You're in!</p>
     </div>
 </div>
+
 <!-- Form Container with relative positioning -->
 <div class="relative w-full max-w-md">
 
@@ -36,13 +41,29 @@
 
     <!-- Main Form -->
     <div id="form-wrapper" class="bg-white shadow-xl rounded-xl w-full p-6 sm:p-8">
-        <h1 class="text-2xl font-semibold text-center mb-2">Nathan and Hannah Present:::::::::::::</h1>
+        <!-- HEADER -->
+        <div class="text-center mb-3">
+            <!-- Classic bold movie font -->
+            <h1 class="text-2xl font-bold tracking-wide mb-1" style="font-family: 'Oswald', sans-serif;">
+                Nathan and Hannah
+            </h1>
 
-        <div class="flex justify-center mb-2">
-            <img src="images/crockpot.png" alt="funny ness" class="w-32 h-20 object-fill" />
+            <!-- Fancy small font for "presents" -->
+            <div class="text-2xl italic mb-2" style="font-family: 'Great Vibes', cursive;">
+                present
+            </div>
+
+            <!-- IMAGE -->
+            <div class="flex justify-center mb-2">
+                <img src="images/crockpot.png" alt="funny ness" class="w-32 h-30 object-fill" />
+            </div>
+
+            <!-- Strong bold title font -->
+            <h3 class="text-3xl mb-6 font-extrabold tracking-tight" style="font-family: 'Cinzel', serif;">
+                The Great Wedding Potluck Signup
+            </h3>
         </div>
 
-        <h3 class="text-2xl font-semibold text-center mb-6">The Great Wedding Potluck Signup</h3>
 
         <form id="dish-form" class="space-y-5">
             <div>
@@ -61,12 +82,22 @@
                 <input type="hidden" name="category" id="category-hidden" required />
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Other People are Bringing:</label>
-                <ul id="taken-dishes" class="list-disc list-inside text-sm text-gray-600 pl-2 space-y-1">
-                    <!-- Items will be inserted here -->
-                </ul>
+            <hr class="my-4 border-t border-gray-300" />
+
+
+            <div id="taken-dishes-wrapper" class="flex items-start p-4 border border-gray-300 rounded bg-gray-50">
+                <div class="flex-1">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Other People are Bringing:</label>
+                    <ul id="taken-dishes" class="list-disc list-inside text-sm text-gray-800 font-semibold pl-2 space-y-1">
+                        (select a category!)
+                    </ul>
+                </div>
+                <div class="ml-4 flex flex-col items-center text-red-600">
+                    <img src="images/obi-wan.png" alt="Alert Detail" class="w-35 h-35 object-contain" />
+                </div>
             </div>
+
+
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1" for="dish">Your Dish</label>
@@ -77,9 +108,12 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1" for="servings">Servings</label>
                 <input type="number" id="servings" name="servings" min="1" required placeholder="eg. 20" class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-500" />
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1" for="servings">Only check if it isn't obvious (eg. an apple is obviously vegan):</label>
+            </div>
             <div class="flex items-center space-x-2">
                 <input type="checkbox" name="gf" id="gf"
-                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600 focus:ring-2 focus:ring-gray-500" />
+                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600" />
                 <label for="gf" class="text-sm text-gray-700">Gluten Free</label>
             </div>
 
@@ -91,7 +125,7 @@
 
             <div class="flex items-center space-x-2">
                 <input type="checkbox" name="vegan" id="vegan"
-                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600 focus:ring-2 focus:ring-gray-500" />
+                       class="h-5 w-5 appearance-none border border-gray-300 rounded-sm checked:bg-gray-600 checked:border-gray-600" />
                 <label for="vegan" class="text-sm text-gray-700">Vegan</label>
             </div>
             <button type="submit" class="w-full mt-4 bg-gray-600 text-white text-sm font-medium px-4 py-3 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">

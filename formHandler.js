@@ -8,6 +8,13 @@ const ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbz1zoU2bDG83Yhjqoo
 
 let allEntries = [];
 
+// To prevent multiple submissions when rapid tapping
+let isSubmitting = false;
+const submitBtn = form.querySelector('button[type="submit"]');
+
+lucide.createIcons();
+
+
 function getMessage(ratio) {
     if (ratio < 0.5) {
         return { text: "we need this!", color: "text-green-700", bg: "bg-green-100" };
@@ -96,6 +103,13 @@ async function loadCategoryData() {
                     servingsInput.value = '';
                     dishInput.placeholder = `Your favorite ${cat.name.toLowerCase()}`;
                 }
+                // Trigger shake animation
+                const takenList = document.getElementById('taken-dishes-wrapper');
+                takenList.classList.add('shake');
+
+                // Remove the class after animation completes to allow retrigger
+                setTimeout(() => takenList.classList.remove('shake'), 400);
+
 
                 updateTakenDishesList(cat.name, data.categories);
             });
@@ -112,44 +126,45 @@ async function loadCategoryData() {
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    if (!categoryHiddenInput.value) {
-        statusDiv.textContent = 'Please select a category.';
-        return;
-    }
-
-    const formData = new FormData(form);
-
-    const dishValue = String(formData.get('dish')).trim();
-    const servingsValue = parseInt(formData.get('servings'), 10);
-
-    // Validate dish name: only letters and spaces
-    if (!/^[a-zA-Z]/.test(dishValue)) {
-        statusDiv.textContent = 'Dish name must start with a letter.';
-        return;
-    }
-
-    if (isNaN(servingsValue) || servingsValue < 1 || servingsValue > 50) {
-        statusDiv.textContent = 'Serving size must be between 1 and 50.';
-        return;
-    }
-
-
-    statusDiv.textContent = '';
-
-
-    const payload = {
-        timestamp: new Date().toISOString(),
-        category: categoryHiddenInput.value,
-        dish: String(formData.get('dish')),
-        person: formData.get('person'),
-        email: formData.get('email'),
-        servings: parseInt(formData.get('servings')),
-        gf: !!formData.get('gf'),
-        df: !!formData.get('df'),
-        vegan: !!formData.get('vegan')
-    };
+    if (isSubmitting) return; // Prevent duplicate submissions
+    isSubmitting = true;
+    if (submitBtn) submitBtn.disabled = true;
 
     try {
+        if (!categoryHiddenInput.value) {
+            statusDiv.textContent = 'Please select a category.';
+            return;
+        }
+
+        const formData = new FormData(form);
+
+        const dishValue = String(formData.get('dish')).trim();
+        const servingsValue = parseInt(formData.get('servings'), 10);
+
+        if (!/^[a-zA-Z]/.test(dishValue)) {
+            statusDiv.textContent = 'Dish name must start with a letter.';
+            return;
+        }
+
+        if (isNaN(servingsValue) || servingsValue < 1 || servingsValue > 50) {
+            statusDiv.textContent = 'Serving size must be between 1 and 50.';
+            return;
+        }
+
+        statusDiv.textContent = '';
+
+        const payload = {
+            timestamp: new Date().toISOString(),
+            category: categoryHiddenInput.value,
+            dish: String(formData.get('dish')),
+            person: formData.get('person'),
+            email: formData.get('email'),
+            servings: parseInt(formData.get('servings')),
+            gf: !!formData.get('gf'),
+            df: !!formData.get('df'),
+            vegan: !!formData.get('vegan')
+        };
+
         const res = await fetch(ENDPOINT_URL, {
             method: 'POST',
             body: JSON.stringify(payload),
@@ -162,19 +177,15 @@ form.addEventListener('submit', async (e) => {
             document.getElementById('form-wrapper').style.display = 'none';
             statusDiv.textContent = '';
 
-// Show overlay container
             const overlay = document.getElementById('thank-you-overlay');
             overlay.style.display = 'block';
 
-// Show explosion gif immediately
             const explosionGif = document.getElementById('explosion-gif');
             explosionGif.style.display = 'block';
 
-// Hide hot food gif initially
             const hotFoodGif = document.getElementById('hot-food-gif');
             hotFoodGif.style.display = 'none';
 
-// Show hot food gif after 1 second delay
             setTimeout(() => {
                 hotFoodGif.style.display = 'block';
             }, 500);
@@ -182,15 +193,20 @@ form.addEventListener('submit', async (e) => {
             categoryHiddenInput.value = '';
             await loadCategoryData();
 
-
         } else {
             statusDiv.textContent = 'Error submitting. Please try again.';
+            if (submitBtn) submitBtn.disabled = false;
         }
+
     } catch (err) {
         console.error('Submit failed:', err);
         statusDiv.textContent = 'Network error. Try again later.';
+        if (submitBtn) submitBtn.disabled = false;
+    } finally {
+        isSubmitting = false;
     }
 });
+
 
 
 
